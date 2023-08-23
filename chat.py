@@ -56,17 +56,13 @@ def handleChat(item_dict):
     try:
         action = item_dict['action']
         if action == 'SENDMSG':
-            pk = item_dict['pk']
-            nizk = item_dict['nizk']
+            pk, nizk, to, c = map(item_dict.__getitem__, ['pk', 'nizk', 'to', 'c'])
             assert verifzk(nizk, bytes.fromhex(pk))
-            to = item_dict['to']
-            c = item_dict['c']
             db.insert({'from': pk, 'to': to, 'c': c})
             return {'msg': 'ok'}
 
         elif action == 'RECVMSG':
-            pk = item_dict['pk']
-            nizk = item_dict['nizk']
+            pk, nizk = map(item_dict.__getitem__, ['pk', 'nizk'])
             assert verifzk(nizk, bytes.fromhex(pk))
             msgs = [*db.db.find({'to': pk})]
             [db.delete(_['_id']) for _ in msgs]
