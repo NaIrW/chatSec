@@ -40,6 +40,7 @@ pqlib.verify.restype = ctypes.c_int
 
 n = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 
+
 def kG(k):
     res = b'\x00' * 65
     k = hex(k)[2:].zfill(64).encode('ascii')
